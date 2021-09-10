@@ -21,11 +21,17 @@ namespace CodingChallenge.UI.Controllers
         {
             options.TotalItems = LibraryService.SearchMoviesCount("");
             if (options.SortColumn == null)
+            {
                 options.SortColumn = "ID";
+            }
             var model = new MovieListViewModel
             {
                 GridOptions = options,
-                Movies = LibraryService.SearchMovies("", (options.Page - 1) * options.ItemsPerPage, options.ItemsPerPage).ToList()
+                Movies = LibraryService.SearchMovies("", 
+                            (options.Page - 1) * options.ItemsPerPage, 
+                            options.ItemsPerPage,
+                            sortColumn: options.SortColumn,
+                            sortDirection: options.SortDirection).ToList()
             };
             return View(model);
         }

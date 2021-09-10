@@ -1,9 +1,10 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace CodingChallenge.DataAccess.Models
 {
-    [DataContract (Name = "Movie")]
-    public class Movie
+    [DataContract(Name = "Movie")]
+    public class Movie : IEquatable<Movie>
     {
         [DataMember(Name = "ID", Order = 1)]
         public int ID { get; set; }
@@ -13,5 +14,14 @@ namespace CodingChallenge.DataAccess.Models
         public int Year { get; set; }
         [DataMember(Name = "Rating", Order = 4)]
         public double Rating { get; set; }
+
+        bool IEquatable<Movie>.Equals(Movie otherMovie)
+        {
+            return Title.Equals(otherMovie.Title);
+        }
+        public override int GetHashCode()
+        {
+            return Title.GetHashCode();
+        }
     }
 }
